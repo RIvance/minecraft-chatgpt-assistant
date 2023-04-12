@@ -21,7 +21,11 @@ public class ChatGptAssistantMod implements ModInitializer {
                 LOGGER.info("Received prompt message: " + messageText);
                 AssistantService service = manager.getService();
                 if (service != null) {
-                    service.executeCommandByPrompt(sender, messageText);
+                    new Thread(() -> {
+                        synchronized (sender) {
+                            service.executeCommandByPrompt(sender, messageText);
+                        }
+                    }).start();
                 } else {
                     LOGGER.warn("Assistant service is not available, please set the API-Key first");
                 }
