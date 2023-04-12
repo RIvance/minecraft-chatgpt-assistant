@@ -1,8 +1,9 @@
-package org.ivance.gptassistant
+package org.ivance.gptassistant.core
 
 import com.theokanning.openai.service.OpenAiService
 import net.minecraft.entity.player.PlayerEntity
 import org.apache.logging.log4j.Logger
+import org.ivance.gptassistant.config.RequestConfig
 
 abstract class AssistantModel(val logger: Logger) {
 
@@ -13,7 +14,7 @@ abstract class AssistantModel(val logger: Logger) {
     fun getPlayerInfoPrompt(player: PlayerEntity): String {
         return (
             "The Minecraft version is ${player.server?.version}. " +
-            "Player ${player.name.string} is at (${player.x}, ${player.y}, ${player.z}) in the ${player.world.dimension} dimension. "
+            "Player ${player.name.string} is now at (${player.x}, ${player.y}, ${player.z}). "
         )
     }
 

@@ -4,8 +4,11 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ivance.gptassistant.core.AssistantManager;
+import org.ivance.gptassistant.core.AssistantService;
 
 public class ChatGptAssistantMod implements ModInitializer {
+
     public static final Logger LOGGER = LogManager.getLogger("ChatGPTAssistant");
 
     private static final AssistantManager manager = new AssistantManager(LOGGER);

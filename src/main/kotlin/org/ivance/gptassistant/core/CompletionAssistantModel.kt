@@ -1,27 +1,32 @@
-package org.ivance.gptassistant
+package org.ivance.gptassistant.core
 
 import com.theokanning.openai.completion.CompletionRequest
 import com.theokanning.openai.completion.CompletionRequest.CompletionRequestBuilder
 import com.theokanning.openai.service.OpenAiService
 import net.minecraft.entity.player.PlayerEntity
 import org.apache.logging.log4j.Logger
+import org.ivance.gptassistant.config.RequestConfig
 
-class CompleteAssistantModel private constructor(
+class CompletionAssistantModel private constructor(
     override val service: OpenAiService, logger: Logger,
     private val modelIdent: Ident = Ident.DAVINCI_003,
 ) : AssistantModel(logger) {
 
-    enum class Ident(name: String) {
+    enum class Ident(private val ident: String) {
         DAVINCI_001("text-davinci-001"),
         DAVINCI_002("text-davinci-002"),
         DAVINCI_003("text-davinci-003"),
         ADA_001("text-ada-001"),
-        CURIE_001("text-curie-001"),
+        CURIE_001("text-curie-001");
+
+        override fun toString(): String {
+            return this.ident
+        }
     }
 
     private fun createCompletionRequestBuilder(config: RequestConfig): CompletionRequestBuilder {
         return CompletionRequest.builder()
-            .model(modelIdent.name)
+            .model(modelIdent.toString())
             .temperature(config.temperature)
             .maxTokens(config.maxTokens)
             .topP(config.topP)
@@ -42,7 +47,7 @@ class CompleteAssistantModel private constructor(
     companion object {
         fun builder(modelIdent: Ident = Ident.DAVINCI_003) = object : Builder() {
             override fun build(service: OpenAiService, logger: Logger): AssistantModel {
-                return CompleteAssistantModel(service, logger, modelIdent)
+                return CompletionAssistantModel(service, logger, modelIdent)
             }
         }
     }

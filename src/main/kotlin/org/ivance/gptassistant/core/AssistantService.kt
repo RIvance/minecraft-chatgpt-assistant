@@ -1,4 +1,4 @@
-package org.ivance.gptassistant
+package org.ivance.gptassistant.core
 
 import com.theokanning.openai.OpenAiApi
 import com.theokanning.openai.OpenAiHttpException
@@ -7,6 +7,7 @@ import com.theokanning.openai.service.OpenAiService.*
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
 import org.apache.logging.log4j.Logger
+import org.ivance.gptassistant.config.RequestConfig
 import java.net.Proxy
 import java.time.Duration
 
@@ -15,7 +16,8 @@ class AssistantService @JvmOverloads constructor(
     private val logger: Logger,
     private val timeoutSecond: Long = 0L,
     private val proxy: Proxy? = null,
-    var config: RequestConfig = RequestConfig.DEFAULT
+    private val modelBuilder: AssistantModel.Builder = ChatAssistantModel.builder(),
+    var requestConfig: RequestConfig = RequestConfig.DEFAULT
 ) {
     private val service: OpenAiService by lazy {
         logger.info("Initializing OpenAI service")
@@ -28,11 +30,7 @@ class AssistantService @JvmOverloads constructor(
         } ?: OpenAiService(token, timeout)
     }
 
-    private var model: AssistantModel = ChatAssistantModel.builder().build(service, logger)
-
-    fun setModel(builder: AssistantModel.Builder) {
-        this.model = builder.build(service, logger)
-    }
+    private val model: AssistantModel = modelBuilder.build(service, logger)
 
     private fun failRequest(player: PlayerEntity, reason: String) {
         player.sendMessage(Text.literal("The assistant is unable to finish your request: $reason"), false)
@@ -40,7 +38,7 @@ class AssistantService @JvmOverloads constructor(
 
     fun executeCommandByPrompt(player: PlayerEntity, prompt: String) {
         try {
-            val command = model.getCommand(player, prompt.trim(':'), config)
+            val command = model.getCommand(player, prompt.trim(':'), requestConfig)
             logger.info("Executing command `$command` for player ${player.name.string}")
             if (player.server?.commandManager?.executeWithPrefix(player.commandSource, command) == 0) {
                 failRequest(player, "Failed to execute command `$command`")
@@ -54,9 +52,9 @@ class AssistantService @JvmOverloads constructor(
 
     fun copy(
         token: String = this.token,
-        logger: Logger = this.logger,
         timeoutSecond: Long = this.timeoutSecond,
         proxy: Proxy? = this.proxy,
-        config: RequestConfig = this.config
-    ) = AssistantService(token, logger, timeoutSecond, proxy, config)
+        modelBuilder: AssistantModel.Builder = this.modelBuilder,
+        requestConfig: RequestConfig = this.requestConfig
+    ) = AssistantService(token, logger, timeoutSecond, proxy, modelBuilder, requestConfig)
 }
