@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "gptassistant",
+  "version": "${version}",
+  "name": "chatgpt-assistant",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/ivance/chatgpt-assistant"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/gptassistant/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.ivance.gptassistant.ChatGptAssistantMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
