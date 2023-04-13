@@ -36,7 +36,7 @@ class CompletionAssistantModel private constructor(
     }
 
     override fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String {
-        val finalPrompt = systemPrompt + getPlayerInfoPrompt(player) + prompt
+        val finalPrompt = systemPrompt + getPlayerInfoPrompt(player) + "\nPlayer: " + prompt + " \nCommand: "
         return service.createCompletion(
             createCompletionRequestBuilder(config).prompt(finalPrompt).build()
         ).choices[0].text.trim().let {
