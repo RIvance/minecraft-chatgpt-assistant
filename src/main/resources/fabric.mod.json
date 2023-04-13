@@ -3,12 +3,12 @@
   "id": "gptassistant",
   "version": "${version}",
   "name": "chatgpt-assistant",
-  "description": "",
-  "authors": [],
+  "description": "An assistant powered by ChatGPT.",
+  "authors": ["Ivance"],
   "contact": {
-    "repo": "https://github.com/ivance/chatgpt-assistant"
+    "repo": "https://github.com/RIvance/minecraft-chatgpt-assistant"
   },
-  "license": "All-Rights-Reserved",
+  "license": "MIT",
   "icon": "assets/gptassistant/icon.png",
   "environment": "*",
   "entrypoints": {

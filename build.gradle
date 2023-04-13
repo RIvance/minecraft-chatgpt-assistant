@@ -30,7 +30,16 @@ dependencies {
     modImplementation 'com.fasterxml.jackson.core:jackson-core:2.13.4'
     modImplementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
     modImplementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-    modImplementation "net.fabricmc:fabric-language-kotlin:1.9.2+kotlin.1.8.10"
+    modImplementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    modImplementation 'com.squareup.okio:okio-jvm:3.0.0'
+    modImplementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    modImplementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    modImplementation 'com.squareup.retrofit2:adapter-rxjava:2.9.0'
+    modImplementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    modImplementation 'io.reactivex.rxjava2:rxjava:2.0.0'
+    modImplementation 'org.reactivestreams:reactive-streams:1.0.3'
+
+    modImplementation 'net.fabricmc:fabric-language-kotlin:1.9.2+kotlin.1.8.10'
 
     modApi 'com.terraformersmc:modmenu:4.2.0-beta.2'
     modApi('me.shedaniel.cloth:cloth-config-fabric:8.2.88') {
@@ -43,6 +52,15 @@ dependencies {
     include 'com.fasterxml.jackson.core:jackson-core:2.13.4'
     include 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
     include 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
+    include 'com.squareup.okhttp3:okhttp:4.10.0'
+    include 'com.squareup.okio:okio-jvm:3.0.0'
+    include 'com.squareup.retrofit2:retrofit:2.9.0'
+    include 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    include 'com.squareup.retrofit2:adapter-rxjava:2.9.0'
+    include 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    include 'io.reactivex.rxjava2:rxjava:2.0.0'
+    include 'org.reactivestreams:reactive-streams:1.0.3'
+
     include 'net.fabricmc:fabric-language-kotlin:1.9.2+kotlin.1.8.10'
 
     include 'com.terraformersmc:modmenu:4.2.0-beta.2'
