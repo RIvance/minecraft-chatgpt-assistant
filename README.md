@@ -7,7 +7,7 @@ Please give me a star🌟 if you like it!
 ![](assets/example.gif)
 
 This mod is still at a very early stage of development and may have some bugs. 
-If you find any bugs, please report them to [GitHub Issues](https://github.com/shedaniel/cloth-config/issues).
+If you find any bugs, please report them to [GitHub Issues](https://github.com/RIvance/minecraft-chatgpt-assistant/issues).
 
 ## Configuration
 
