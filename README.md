@@ -9,6 +9,29 @@ Please give me a star🌟 if you like it!
 This mod is still at a very early stage of development and may have some bugs. 
 If you find any bugs, please report them to [GitHub Issues](https://github.com/RIvance/minecraft-chatgpt-assistant/issues).
 
+## Usage
+
+Press `t` to open the chat HUD. Type whatever you want prefixed with `:` in nature languages and press enter. For example:
+```
+:give me an apple
+:give me a diamond sword with the best enchants
+:kill all mobs
+:kill the dragon
+:easy mode
+:disable mob spawning
+:spawn a zombie with all enchanted diamond armors
+```
+or even something shorter
+```
+:food
+:hard
+:day
+:night
+:stop rainning
+:64 golden apples
+:speed 2
+```
+
 ## Configuration
 
 ![](assets/config-menu.png)
