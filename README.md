@@ -2,6 +2,8 @@
 
 [![ModLoader|Fabric](https://img.shields.io/badge/ModLoader-Fabric-brightgreen)](https://fabricmc.net/)[![ModLoader|Fabric](https://img.shields.io/badge/Minecraft-1.19.2-blue)](https://minecraft.net/)
 
+Please give me a star🌟 if you like it!
+
 ![](assets/example.gif)
 
 This mod is currently at a very early stage of development. 
@@ -14,6 +16,6 @@ You should restart the Minecraft client after modifying the config file.
 ## Where can I get the API key?
 
 You can get the API key from [OpenAI](https://platform.openai.com/account/api-keys). 
-Click the "Create API Key" button to create a new key.
+Click the "Create new secret key" button to create a new key.
 
 ![](assets/api-key.png)
