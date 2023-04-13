@@ -46,12 +46,8 @@ class AssistantService @JvmOverloads constructor(
                 return
             }
             logger.info("Executing command `$command` for player ${player.name.string}")
-            if (player is ClientPlayerEntity) {
-                if (!player.sendCommand(command)) failRequest(player, "Failed to execute command `$command`")
-            } else {
-                if (player.server?.commandManager?.executeWithPrefix(player.commandSource, command) == 0) {
-                    failRequest(player, "Failed to execute command `$command`")
-                }
+            if (player.server?.commandManager?.executeWithPrefix(player.commandSource, command) == 0) {
+                failRequest(player, "Failed to execute command `$command`")
             }
         } catch (exception: OpenAiHttpException) {
             failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
