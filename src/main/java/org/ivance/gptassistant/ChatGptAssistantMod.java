@@ -2,6 +2,7 @@ package org.ivance.gptassistant;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
+import net.minecraft.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ivance.gptassistant.config.AssistantConfig;
@@ -34,7 +35,9 @@ public class ChatGptAssistantMod implements ModInitializer {
                         }
                     }).start();
                 } else {
-                    LOGGER.warn("Assistant service is not available, please set the API-Key first");
+                    String warningMessage = "ChatGPT assistant service is not available, please set the API key first.";
+                    sender.sendMessage(Text.literal(warningMessage));
+                    LOGGER.warn(warningMessage);
                 }
             }
         });

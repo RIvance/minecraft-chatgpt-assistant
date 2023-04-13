@@ -53,12 +53,17 @@ class AssistantService @JvmOverloads constructor(
                     failRequest(player, "Failed to execute command `$command`")
                 }
             }
-        } catch (exception: SocketException) {
-            failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
         } catch (exception: OpenAiHttpException) {
             failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
         } catch (exception: Exception) {
-            failRequest(player, exception.message ?: "Unknown error")
+            if (exception.cause is SocketException) {
+                failRequest(player,
+                    "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}. " +
+                    "Please check your internet connection or proxy settings. "
+                )
+            } else {
+                failRequest(player, exception.message ?: "Unknown error")
+            }
         }
     }
 

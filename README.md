@@ -6,14 +6,34 @@ Please give me a star🌟 if you like it!
 
 ![](assets/example.gif)
 
-This mod is currently at a very early stage of development. 
-It does not have a config menu yet. 
-If you want to use it right now, please modify the config file at `.minecraft/config/gptassistant.properties` manually.
+This mod is still at a very early stage of development and may have some bugs. 
+If you find any bugs, please report them to [GitHub Issues](https://github.com/shedaniel/cloth-config/issues).
 
-The default config file is generated after the first launch with this mod loaded. 
-You should restart the Minecraft client after modifying the config file. 
+## Configuration
 
-## Where can I get the API key?
+![](assets/config-menu.png)
+
+### API Key
+
+The API key is used to access the OpenAI API.
+Please set the API key in the configuration menu before using the mod.
+Otherwise, the mod will not work.
+
+### Proxy (Optional)
+
+If you want to access the OpenAI API through a proxy, you can set the proxy in the configuration menu.
+
+### Response Timeout
+
+The response timeout is used to set the timeout of the OpenAI API response. 
+Set the value to 0 to disable the timeout.
+
+### Model
+
+The model used by the OpenAI API.
+See [OpenAI API Documentation](https://platform.openai.com/docs/api-reference/models) for more information.
+
+## How can I get the API key?
 
 You can get the API key from [OpenAI](https://platform.openai.com/account/api-keys). 
 Click the "Create new secret key" button to create a new key.
