@@ -16,28 +16,15 @@ class AssistantManager(private val logger: Logger) {
         }
     }.toMap()
 
-    var config: AssistantConfig = AssistantConfig.loadFromFile()
+    var config: AssistantConfig = AssistantConfig.DEFAULT
         set(value) = value.let { config ->
-            if (field != config) {
-                field = config
-                this.service = createServiceFromConfig(config)
-                try {
-                    config.saveToFile()
-                } catch (exception: Exception) {
-                    logger.error("Failed to save config to file", exception)
-                }
-                service = service?.copy(
-                    token = config.token,
-                    timeoutSecond = config.timeoutSecond,
-                    proxy = config.proxy?.let(AssistantManager::parseProxy),
-                    modelBuilder = modelBuilders[config.model]!!,
-                    requestConfig = config.requestConfig,
-                )
-            }
+            if (field != config) field = config
+            this.service = createServiceFromConfig(config)
         }
 
-    var service: AssistantService? = createServiceFromConfig(config)
+    var service: AssistantService? = null
         private set
+        get() = field ?: createServiceFromConfig(config)
 
     private fun createServiceFromConfig(config: AssistantConfig): AssistantService? {
         return if (config.token.isNotBlank()) {
@@ -46,6 +33,7 @@ class AssistantManager(private val logger: Logger) {
                 logger = logger,
                 timeoutSecond = config.timeoutSecond,
                 proxy = config.proxy?.let(::parseProxy),
+                modelBuilder = modelBuilders[config.model]!!,
                 requestConfig = config.requestConfig
             )
         } else null

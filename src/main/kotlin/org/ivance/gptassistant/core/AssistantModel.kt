@@ -14,11 +14,25 @@ abstract class AssistantModel(val logger: Logger) {
     fun getPlayerInfoPrompt(player: PlayerEntity): String {
         return (
             "The Minecraft version is ${player.server?.version}. " +
-            "Player ${player.name.string} is now at (${player.x}, ${player.y}, ${player.z}). "
+            "The player's name is ${player.name.string}. "
         )
     }
 
-    abstract fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String
+    protected abstract fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String
+
+    fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String {
+        return parseCommandFromResponse(getResponse(player, prompt, config))
+    }
+
+    private fun parseCommandFromResponse(response: String): String {
+        val singleBacktickQuotedPattern = "`(.*)`".toRegex()
+        val threeBacktickQuotedPattern = "```(.*)```".toRegex()
+        return (
+            singleBacktickQuotedPattern.find(response)?.groupValues?.get(1) ?:
+            threeBacktickQuotedPattern.find(response)?.groupValues?.get(1) ?:
+            response
+        ).trim()
+    }
 
     abstract class Builder {
         abstract fun build(service: OpenAiService, logger: Logger): AssistantModel

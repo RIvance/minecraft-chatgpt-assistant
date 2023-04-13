@@ -4,6 +4,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ivance.gptassistant.config.AssistantConfig;
+import org.ivance.gptassistant.config.ModConfig;
 import org.ivance.gptassistant.core.AssistantManager;
 import org.ivance.gptassistant.core.AssistantService;
 
@@ -13,8 +15,13 @@ public class ChatGptAssistantMod implements ModInitializer {
 
     private static final AssistantManager manager = new AssistantManager(LOGGER);
 
+    public static void setConfig(AssistantConfig config) {
+        manager.setConfig(config);
+    }
+
     @Override
     public void onInitialize() {
+        ModConfig.init();
         ServerMessageEvents.CHAT_MESSAGE.register((message, sender, parameters) -> {
             String messageText = message.getContent().getString();
             if (messageText.startsWith(":")) {

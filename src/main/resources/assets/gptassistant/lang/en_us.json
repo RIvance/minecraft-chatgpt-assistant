@@ -1,0 +1,12 @@
+{
+  "text.autoconfig.gptassistant.title": "ChatGPT Assistant",
+  "text.autoconfig.gptassistant.option.token": "OpenAI API Key",
+  "text.autoconfig.gptassistant.option.proxy": "Proxy",
+  "text.autoconfig.gptassistant.option.timeoutSecond": "Request timeout (seconds, 0 for no timeout)",
+  "text.autoconfig.gptassistant.option.model": "Model",
+  "text.autoconfig.gptassistant.option.maxTokens": "Max token",
+  "text.autoconfig.gptassistant.option.temperature": "Temperature",
+  "text.autoconfig.gptassistant.option.topP": "TopP",
+  "text.autoconfig.gptassistant.option.frequencyPenalty": "Frequency Penalty",
+  "text.autoconfig.gptassistant.option.presencePenalty": "Presence Penalty"
+}

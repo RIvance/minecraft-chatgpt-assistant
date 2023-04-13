@@ -35,7 +35,7 @@ class CompletionAssistantModel private constructor(
             .presencePenalty(config.presencePenalty)
     }
 
-    override fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String {
+    override fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String {
         val finalPrompt = systemPrompt + getPlayerInfoPrompt(player) + prompt
         return service.createCompletion(
             createCompletionRequestBuilder(config).prompt(finalPrompt).build()

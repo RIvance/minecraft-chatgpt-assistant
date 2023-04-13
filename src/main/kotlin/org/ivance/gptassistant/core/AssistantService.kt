@@ -4,11 +4,13 @@ import com.theokanning.openai.OpenAiApi
 import com.theokanning.openai.OpenAiHttpException
 import com.theokanning.openai.service.OpenAiService
 import com.theokanning.openai.service.OpenAiService.*
+import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
 import org.apache.logging.log4j.Logger
 import org.ivance.gptassistant.config.RequestConfig
 import java.net.Proxy
+import java.net.SocketException
 import java.time.Duration
 
 class AssistantService @JvmOverloads constructor(
@@ -39,10 +41,20 @@ class AssistantService @JvmOverloads constructor(
     fun executeCommandByPrompt(player: PlayerEntity, prompt: String) {
         try {
             val command = model.getCommand(player, prompt.trim(':'), requestConfig)
-            logger.info("Executing command `$command` for player ${player.name.string}")
-            if (player.server?.commandManager?.executeWithPrefix(player.commandSource, command) == 0) {
-                failRequest(player, "Failed to execute command `$command`")
+            if (!command.startsWith("/")) {
+                failRequest(player, command)
+                return
             }
+            logger.info("Executing command `$command` for player ${player.name.string}")
+            if (player is ClientPlayerEntity) {
+                if (!player.sendCommand(command)) failRequest(player, "Failed to execute command `$command`")
+            } else {
+                if (player.server?.commandManager?.executeWithPrefix(player.commandSource, command) == 0) {
+                    failRequest(player, "Failed to execute command `$command`")
+                }
+            }
+        } catch (exception: SocketException) {
+            failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
         } catch (exception: OpenAiHttpException) {
             failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
         } catch (exception: Exception) {

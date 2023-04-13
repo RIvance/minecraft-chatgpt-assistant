@@ -32,7 +32,7 @@ class ChatAssistantModel private constructor(
             .presencePenalty(config.presencePenalty)
     }
 
-    override fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String {
+    override fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String {
         val finalSystemPrompt = systemPrompt + getPlayerInfoPrompt(player)
         logger.info("System prompt: $finalSystemPrompt")
         logger.info("User prompt: $prompt")
