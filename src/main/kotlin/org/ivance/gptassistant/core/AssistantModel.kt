@@ -13,15 +13,16 @@ abstract class AssistantModel(val logger: Logger) {
 
     fun getPlayerInfoPrompt(player: PlayerEntity): String {
         return (
-            "The Minecraft version is ${player.server?.version}. " +
-            "The player's name is ${player.name.string}. "
+            "The player ${player.name.string} is playing Minecraft ${player.server?.version}. "
         )
     }
 
     protected abstract fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String
 
     fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String {
-        return parseCommandFromResponse(getResponse(player, prompt, config))
+        val response = getResponse(player, prompt, config)
+        logger.info("Response from OpenAI: $response")
+        return parseCommandFromResponse(response)
     }
 
     private fun parseCommandFromResponse(response: String): String {
