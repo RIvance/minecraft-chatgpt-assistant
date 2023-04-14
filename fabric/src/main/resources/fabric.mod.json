@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "gptassistant",
+  "version": "${version}",
+  "name": "gptassistant",
+  "description": "An assistant powered by ChatGPT.",
+  "authors": ["R.Ivance"],
+  "contact": {
+    "repo": "https://github.com/RIvance/minecraft-chatgpt-assistant"
+  },
+  "license": "MIT",
+  "icon": "assets/gptassistant/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.ivance.gptassistant.fabric.ChatGptAssistantFabric"
+    ],
+    "modmenu": [
+      "org.ivance.gptassistant.fabric.gui.AssistantModMenu"
+    ]
+  },
+  "mixins": [
+    "gptassistant.mixins.json",
+    "gptassistant-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.12",
+    "minecraft": ">=1.19.2"
+  }
+}
