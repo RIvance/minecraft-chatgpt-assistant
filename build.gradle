@@ -1,6 +1,7 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "0.11.0-SNAPSHOT" apply false
+    id "org.jetbrains.kotlin.jvm" version "1.8.20"
 }
 
 architectury {
@@ -19,7 +20,7 @@ subprojects {
         // The following line declares the mojmap mappings, you may use other mappings as well
         mappings loom.officialMojangMappings()
         // The following line declares the yarn mappings you may select this one as well.
-        // mappings "net.fabricmc:yarn:@YARN_MAPPINGS@:v2"
+        // mappings "net.fabricmc:yarn:${rootProject.yarn_mappings}:v2"
     }
 }
 
@@ -27,6 +28,7 @@ allprojects {
     apply plugin: "java"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
+    apply plugin: 'org.jetbrains.kotlin.jvm'
 
     archivesBaseName = rootProject.archives_base_name
     version = rootProject.mod_version
@@ -61,12 +63,6 @@ subprojects {
             'com.fasterxml.jackson.core:jackson-annotations:2.13.4',
         ]
         includeLibs = ext.apiLibs + [
-            'com.theokanning.openai-gpt3-java:api:0.12.0',
-            'com.theokanning.openai-gpt3-java:client:0.12.0',
-            'com.theokanning.openai-gpt3-java:service:0.12.0',
-            'com.fasterxml.jackson.core:jackson-core:2.13.4',
-            'com.fasterxml.jackson.core:jackson-databind:2.13.4.1',
-            'com.fasterxml.jackson.core:jackson-annotations:2.13.4',
             'com.squareup.okhttp3:okhttp:4.10.0',
             'com.squareup.okio:okio-jvm:3.0.0',
             'com.squareup.retrofit2:retrofit:2.9.0',

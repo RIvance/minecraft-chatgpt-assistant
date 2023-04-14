@@ -1,12 +1,12 @@
 {
-  "text.autoconfig.assets/gptassistant.title": "ChatGPT Assistant",
-  "text.autoconfig.assets/gptassistant.option.token": "OpenAI API Key",
-  "text.autoconfig.assets/gptassistant.option.proxy": "Proxy",
-  "text.autoconfig.assets/gptassistant.option.timeoutSecond": "Request timeout (seconds, 0 for no timeout)",
-  "text.autoconfig.assets/gptassistant.option.model": "Model",
-  "text.autoconfig.assets/gptassistant.option.maxTokens": "Max tokens",
-  "text.autoconfig.assets/gptassistant.option.temperature": "Temperature",
-  "text.autoconfig.assets/gptassistant.option.topP": "TopP",
-  "text.autoconfig.assets/gptassistant.option.frequencyPenalty": "Frequency Penalty",
-  "text.autoconfig.assets/gptassistant.option.presencePenalty": "Presence Penalty"
+  "text.autoconfig.gptassistant.title": "ChatGPT Assistant",
+  "text.autoconfig.gptassistant.option.token": "OpenAI API Key",
+  "text.autoconfig.gptassistant.option.proxy": "Proxy",
+  "text.autoconfig.gptassistant.option.timeoutSecond": "Request timeout (seconds, 0 for no timeout)",
+  "text.autoconfig.gptassistant.option.model": "Model",
+  "text.autoconfig.gptassistant.option.maxTokens": "Max tokens",
+  "text.autoconfig.gptassistant.option.temperature": "Temperature",
+  "text.autoconfig.gptassistant.option.topP": "TopP",
+  "text.autoconfig.gptassistant.option.frequencyPenalty": "Frequency Penalty",
+  "text.autoconfig.gptassistant.option.presencePenalty": "Presence Penalty"
 }

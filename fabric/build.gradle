@@ -1,6 +1,5 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "org.jetbrains.kotlin.jvm" version "1.8.20"
 }
 
 architectury {
@@ -21,7 +20,6 @@ shadowJar {
     archiveClassifier = "shadow"
 }
 
-
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
@@ -39,9 +37,6 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-
     modApi apiLibs
     include includeLibs
 
@@ -57,6 +52,9 @@ dependencies {
     include('me.shedaniel.cloth:cloth-config-fabric:8.2.88') {
         exclude(group: "net.fabricmc.fabric-api")
     }
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
 processResources {

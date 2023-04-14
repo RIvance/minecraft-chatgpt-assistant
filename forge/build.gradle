@@ -1,6 +1,7 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
+
 architectury {
     platformSetupLoomIde()
     forge()
@@ -14,10 +15,30 @@ configurations {
     developmentForge.extendsFrom common
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+}
+
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
+
+    modApi apiLibs
+
+    shadowCommon includeLibs
+    shadowCommon 'thedarkcolour:kotlinforforge:3.10.0'
+
+    // https://linkie.shedaniel.dev/dependencies?loader=forge
+    modApi("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
+
+    shadowCommon("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
@@ -33,9 +54,8 @@ processResources {
 
 shadowJar {
     exclude "fabric.mod.json"
-
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "shadow"
 }
 
 remapJar {

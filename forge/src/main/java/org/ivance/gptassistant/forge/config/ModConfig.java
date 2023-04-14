@@ -1,4 +1,4 @@
-package org.ivance.gptassistant.fabric.config;
+package org.ivance.gptassistant.forge.config;
 
 import blue.endless.jankson.Comment;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -9,7 +9,7 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.world.InteractionResult;
 import org.ivance.gptassistant.config.AssistantConfig;
 import org.ivance.gptassistant.config.RequestConfig;
-import org.ivance.gptassistant.fabric.ChatGptAssistantFabric;
+import org.ivance.gptassistant.forge.ChatGptAssistantForge;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,14 +24,14 @@ public class ModConfig implements ConfigData, AssistantConfig {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         INSTANCE = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         AutoConfig.getConfigHolder(ModConfig.class).registerLoadListener((manager, data) -> {
-            ChatGptAssistantFabric.setConfig(data);
+            ChatGptAssistantForge.setConfig(data);
             return InteractionResult.SUCCESS;
         });
         AutoConfig.getConfigHolder(ModConfig.class).registerSaveListener((manager, data) -> {
-            ChatGptAssistantFabric.setConfig(data);
+            ChatGptAssistantForge.setConfig(data);
             return InteractionResult.SUCCESS;
         });
-        ChatGptAssistantFabric.setConfig(INSTANCE);
+        ChatGptAssistantForge.setConfig(INSTANCE);
     }
 
     @Comment("OpenAI Api key, can be obtained from https://platform.openai.com/account/api-keys")
