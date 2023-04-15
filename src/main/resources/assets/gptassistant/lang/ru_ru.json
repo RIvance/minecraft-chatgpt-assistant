@@ -1,0 +1,12 @@
+{
+  "text.autoconfig.gptassistant.title": "ChatGPT Assistant",
+  "text.autoconfig.gptassistant.option.token": "Ключ OpenAI API",
+  "text.autoconfig.gptassistant.option.proxy": "Прокси-сервер",
+  "text.autoconfig.gptassistant.option.timeoutSecond": "Истекло время ожидания (секунд, 0 без выхода из сеанса)",
+  "text.autoconfig.gptassistant.option.model": "Модель",
+  "text.autoconfig.gptassistant.option.maxTokens": "Максимальное количество токенов",
+  "text.autoconfig.gptassistant.option.temperature": "Температура",
+  "text.autoconfig.gptassistant.option.topP": "TopP",
+  "text.autoconfig.gptassistant.option.frequencyPenalty": "Штраф за частотное повторение",
+  "text.autoconfig.gptassistant.option.presencePenalty": "Наличие штрафа"
+}
