@@ -32,7 +32,7 @@ public class ChatGptAssistantMod implements ModInitializer {
                 }).start();
             } else {
                 String warningMessage = "ChatGPT assistant service is not available, please set the API key first.";
-                sender.sendMessage(Text.literal(warningMessage));
+                sender.sendMessage(Text.of(warningMessage), false);
                 LOGGER.warn(warningMessage);
             }
         }

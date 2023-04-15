@@ -35,7 +35,7 @@ class AssistantService @JvmOverloads constructor(
     private val model: AssistantModel = modelBuilder.build(service, logger)
 
     private fun failRequest(player: PlayerEntity, reason: String) {
-        player.sendMessage(Text.literal("The assistant is unable to finish your request: $reason"), false)
+        player.sendMessage(Text.of("The assistant is unable to finish your request: $reason"), false)
     }
 
     fun executeCommandByPrompt(player: PlayerEntity, prompt: String) {
@@ -46,8 +46,8 @@ class AssistantService @JvmOverloads constructor(
                 return
             }
             logger.info("Executing command `$command` for player ${player.name.string}")
-            player.server?.commandManager?.executeWithPrefix(player.commandSource, command) ?: run {
-                MinecraftClient.getInstance().player?.networkHandler?.sendCommand(command.trim('/')) ?: {
+            player.server?.commandManager?.execute(player.commandSource, command.trim('/')) ?: run {
+                MinecraftClient.getInstance().player?.sendChatMessage(command) ?: {
                     failRequest(player, "Unable to send command to the server")
                 }
             }
