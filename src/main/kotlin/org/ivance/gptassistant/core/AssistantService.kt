@@ -4,6 +4,7 @@ import com.theokanning.openai.OpenAiApi
 import com.theokanning.openai.OpenAiHttpException
 import com.theokanning.openai.service.OpenAiService
 import com.theokanning.openai.service.OpenAiService.*
+import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
 import org.apache.logging.log4j.Logger
@@ -34,7 +35,7 @@ class AssistantService @JvmOverloads constructor(
     private val model: AssistantModel = modelBuilder.build(service, logger)
 
     private fun failRequest(player: PlayerEntity, reason: String) {
-        player.sendMessage(Text.literal("The assistant is unable to finish your request: $reason"), false)
+        player.sendMessage(Text.of("The assistant is unable to finish your request: $reason"), false)
     }
 
     fun executeCommandByPrompt(player: PlayerEntity, prompt: String) {
@@ -45,7 +46,11 @@ class AssistantService @JvmOverloads constructor(
                 return
             }
             logger.info("Executing command `$command` for player ${player.name.string}")
-            player.server?.commandManager?.executeWithPrefix(player.commandSource, command)
+            player.server?.commandManager?.execute(player.commandSource, command.trim('/')) ?: run {
+                MinecraftClient.getInstance().player?.sendChatMessage(command) ?: run {
+                    failRequest(player, "Unable to send command to the server")
+                }
+            }
         } catch (exception: OpenAiHttpException) {
             failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
         } catch (exception: Exception) {

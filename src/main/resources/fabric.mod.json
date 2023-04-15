@@ -19,6 +19,9 @@
       "org.ivance.gptassistant.gui.AssistantModMenu"
     ]
   },
+  "mixins": [
+    "gptassistant.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",

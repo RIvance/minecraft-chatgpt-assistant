@@ -1,7 +1,7 @@
 package org.ivance.gptassistant;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,26 +20,26 @@ public class ChatGptAssistantMod implements ModInitializer {
         manager.setConfig(config);
     }
 
+    public static void handleChatMessage(String messageText, PlayerEntity sender) {
+        if (messageText.startsWith(":")) {
+            LOGGER.info("Received prompt message: " + messageText);
+            AssistantService service = manager.getService();
+            if (service != null) {
+                new Thread(() -> {
+                    synchronized (sender) {
+                        service.executeCommandByPrompt(sender, messageText);
+                    }
+                }).start();
+            } else {
+                String warningMessage = "ChatGPT assistant service is not available, please set the API key first.";
+                sender.sendMessage(Text.of(warningMessage), false);
+                LOGGER.warn(warningMessage);
+            }
+        }
+    }
+
     @Override
     public void onInitialize() {
         ModConfig.init();
-        ServerMessageEvents.CHAT_MESSAGE.register((message, sender, parameters) -> {
-            String messageText = message.getContent().getString();
-            if (messageText.startsWith(":")) {
-                LOGGER.info("Received prompt message: " + messageText);
-                AssistantService service = manager.getService();
-                if (service != null) {
-                    new Thread(() -> {
-                        synchronized (sender) {
-                            service.executeCommandByPrompt(sender, messageText);
-                        }
-                    }).start();
-                } else {
-                    String warningMessage = "ChatGPT assistant service is not available, please set the API key first.";
-                    sender.sendMessage(Text.literal(warningMessage));
-                    LOGGER.warn(warningMessage);
-                }
-            }
-        });
     }
 }

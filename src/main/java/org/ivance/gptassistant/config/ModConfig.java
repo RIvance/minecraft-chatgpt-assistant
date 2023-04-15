@@ -1,6 +1,5 @@
 package org.ivance.gptassistant.config;
 
-import blue.endless.jankson.Comment;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -32,7 +31,7 @@ public class ModConfig implements ConfigData, AssistantConfig {
         ChatGptAssistantMod.setConfig(INSTANCE);
     }
 
-    @Comment("OpenAI Api key, can be obtained from https://platform.openai.com/account/api-keys")
+    // @Comment("OpenAI Api key, can be obtained from https://platform.openai.com/account/api-keys")
     private String token = "";
 
     @Override @NotNull
@@ -40,7 +39,7 @@ public class ModConfig implements ConfigData, AssistantConfig {
         return token;
     }
 
-    @Comment("[Optional] Proxy address, e.g. http://127.0.0.1:8889")
+    // @Comment("[Optional] Proxy address, e.g. http://127.0.0.1:8889")
     private String proxy = "";
 
     @Override @Nullable
@@ -48,7 +47,7 @@ public class ModConfig implements ConfigData, AssistantConfig {
         return proxy.isBlank() ? null : proxy;
     }
 
-    @Comment("Request timeout in seconds, 0 for no timeout")
+    // @Comment("Request timeout in seconds, 0 for no timeout")
     @ConfigEntry.BoundedDiscrete(min = 0, max = 300)
     private long timeoutSecond = 0;
 
@@ -78,7 +77,7 @@ public class ModConfig implements ConfigData, AssistantConfig {
         }
     }
 
-    @Comment("Model to use, see https://platform.openai.com/docs/api-reference/models for more details")
+    // @Comment("Model to use, see https://platform.openai.com/docs/api-reference/models for more details")
     private Model model = Model.DAVINCI_003;
 
     @Override @NotNull
