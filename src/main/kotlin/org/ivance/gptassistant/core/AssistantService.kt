@@ -47,7 +47,9 @@ class AssistantService @JvmOverloads constructor(
             }
             logger.info("Executing command `$command` for player ${player.name.string}")
             player.server?.commandManager?.executeWithPrefix(player.commandSource, command) ?: run {
-                MinecraftClient.getInstance().player?.sendCommand(command.trim('/'))
+                MinecraftClient.getInstance().player?.networkHandler?.sendCommand(command.trim('/')) ?: {
+                    failRequest(player, "Unable to send command to the server")
+                }
             }
         } catch (exception: OpenAiHttpException) {
             failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
