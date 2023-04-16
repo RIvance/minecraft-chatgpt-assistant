@@ -36,12 +36,10 @@ class CompletionAssistantModel private constructor(
     }
 
     override fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String {
-        val finalPrompt = systemPrompt + getPlayerInfoPrompt(player) + "\nPlayer: " + prompt + " \nCommand: "
+        val finalPrompt = systemPrompt + getPlayerInfoPrompt(player) + "\nPlayer: " + prompt + " \nCommands: "
         return service.createCompletion(
             createCompletionRequestBuilder(config).prompt(finalPrompt).build()
-        ).choices[0].text.trim().let {
-            if (!it.startsWith("/")) "/$it" else it
-        }
+        ).choices[0].text.trim()
     }
 
     companion object {

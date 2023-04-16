@@ -1,10 +1,10 @@
 package org.ivance.gptassistant.core
 
 import com.theokanning.openai.service.OpenAiService
+import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.player.PlayerEntity
 import org.apache.logging.log4j.Logger
 import org.ivance.gptassistant.config.RequestConfig
-import org.ivance.gptassistant.util.format
 
 abstract class AssistantModel(val logger: Logger) {
 
@@ -14,27 +14,11 @@ abstract class AssistantModel(val logger: Logger) {
 
     fun getPlayerInfoPrompt(player: PlayerEntity): String {
         return (
-            "The player ${player.name.string} is playing Minecraft ${player.server?.version}. "
+            "The player ${player.name.string} is playing Minecraft ${MinecraftClient.getInstance().gameVersion}. "
         )
     }
 
-    protected abstract fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String
-
-    fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String {
-        val response = getResponse(player, player.format(prompt), config)
-        logger.info("Response from OpenAI: $response")
-        return parseCommandFromResponse(response)
-    }
-
-    private fun parseCommandFromResponse(response: String): String {
-        val singleBacktickQuotedPattern = "`(.*)`".toRegex()
-        val threeBacktickQuotedPattern = "```(.*)```".toRegex()
-        return (
-            singleBacktickQuotedPattern.find(response)?.groupValues?.get(1) ?:
-            threeBacktickQuotedPattern.find(response)?.groupValues?.get(1) ?:
-            response
-        ).trim()
-    }
+    abstract fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String
 
     abstract class Builder {
         abstract fun build(service: OpenAiService, logger: Logger): AssistantModel
@@ -42,9 +26,10 @@ abstract class AssistantModel(val logger: Logger) {
 
     companion object {
         const val DEFAULT_SYSTEM_PROMPT = (
-            "You are an assistant who knows everything about Minecraft. " +
-            "You need to provide a command that satisfies the players' requirement. " +
-            "You should only show the command itself and don't provide any extra info. "
+            "You are a system that built for translating player's requirements into Minecraft commands. " +
+            "Your only task it to provide translated commands with line breaks. " +
+            "Don't teach the player to do anything and don't ask or explain anything. " +
+            "The commands should be executable without any modification. "
         )
     }
 }

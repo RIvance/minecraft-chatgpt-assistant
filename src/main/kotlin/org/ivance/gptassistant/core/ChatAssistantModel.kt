@@ -43,9 +43,7 @@ class ChatAssistantModel private constructor(
                     ChatMessage("user", prompt)
                 )
             ).build()
-        ).choices[0].message.content.trim().let {
-            if (!it.startsWith("/")) "/$it" else it
-        }
+        ).choices[0].message.content.trim()
     }
 
     companion object {
