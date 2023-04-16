@@ -13,11 +13,16 @@ class CompletionAssistantModel private constructor(
 ) : AssistantModel(logger) {
 
     enum class Ident(private val ident: String) {
+
+        // GPT-3.5 models
         DAVINCI_001("text-davinci-001"),
         DAVINCI_002("text-davinci-002"),
         DAVINCI_003("text-davinci-003"),
+
+        // GPT-3 models
         ADA_001("text-ada-001"),
-        CURIE_001("text-curie-001");
+        CURIE_001("text-curie-001"),
+        BABBAGE_001("text-babbage-001");
 
         override fun toString(): String {
             return this.ident
