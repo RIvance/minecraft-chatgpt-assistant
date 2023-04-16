@@ -18,7 +18,7 @@ class AssistantService @JvmOverloads constructor(
     private val logger: Logger,
     private val timeoutSecond: Long = 0L,
     private val proxy: Proxy? = null,
-    private val modelBuilder: AssistantModel.Builder = ChatAssistantModel.builder(),
+    modelBuilder: AssistantModel.Builder = ChatAssistantModel.builder(),
     var requestConfig: RequestConfig = RequestConfig.DEFAULT
 ) {
     private val service: OpenAiService by lazy {

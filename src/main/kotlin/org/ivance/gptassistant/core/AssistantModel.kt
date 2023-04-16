@@ -4,6 +4,7 @@ import com.theokanning.openai.service.OpenAiService
 import net.minecraft.entity.player.PlayerEntity
 import org.apache.logging.log4j.Logger
 import org.ivance.gptassistant.config.RequestConfig
+import org.ivance.gptassistant.util.format
 
 abstract class AssistantModel(val logger: Logger) {
 
@@ -20,7 +21,7 @@ abstract class AssistantModel(val logger: Logger) {
     protected abstract fun getResponse(player: PlayerEntity, prompt: String, config: RequestConfig): String
 
     fun getCommand(player: PlayerEntity, prompt: String, config: RequestConfig): String {
-        val response = getResponse(player, prompt, config)
+        val response = getResponse(player, player.format(prompt), config)
         logger.info("Response from OpenAI: $response")
         return parseCommandFromResponse(response)
     }
@@ -42,7 +43,7 @@ abstract class AssistantModel(val logger: Logger) {
     companion object {
         const val DEFAULT_SYSTEM_PROMPT = (
             "You are an assistant who knows everything about Minecraft. " +
-            "You need to provide a command that satisfies the players' needs. " +
+            "You need to provide a command that satisfies the players' requirement. " +
             "You should only show the command itself and don't provide any extra info. "
         )
     }
