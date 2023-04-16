@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
 import org.apache.logging.log4j.Logger
 import org.ivance.gptassistant.config.RequestConfig
+import org.ivance.gptassistant.util.format
 import java.net.Proxy
 import java.net.SocketException
 import java.time.Duration
@@ -18,7 +19,7 @@ class AssistantService @JvmOverloads constructor(
     private val logger: Logger,
     private val timeoutSecond: Long = 0L,
     private val proxy: Proxy? = null,
-    private val modelBuilder: AssistantModel.Builder = ChatAssistantModel.builder(),
+    modelBuilder: AssistantModel.Builder = ChatAssistantModel.builder(),
     var requestConfig: RequestConfig = RequestConfig.DEFAULT
 ) {
     private val service: OpenAiService by lazy {
@@ -38,18 +39,24 @@ class AssistantService @JvmOverloads constructor(
         player.sendMessage(Text.literal("The assistant is unable to finish your request: $reason"), false)
     }
 
+    private fun PlayerEntity.executeCommand(command: String) {
+        logger.info("Executing command `$command` for player ${this.name.string}")
+        this.server?.commandManager?.executeWithPrefix(this.commandSource, command) ?: run {
+            MinecraftClient.getInstance().player?.networkHandler?.sendCommand(command.trim('/')) ?: {
+                failRequest(this, "Unable to send command to the server")
+            }
+        }
+    }
+
     fun executeCommandByPrompt(player: PlayerEntity, prompt: String) {
         try {
-            val command = model.getCommand(player, prompt.trim(':'), requestConfig)
-            if (!command.startsWith("/")) {
-                failRequest(player, command)
-                return
-            }
-            logger.info("Executing command `$command` for player ${player.name.string}")
-            player.server?.commandManager?.executeWithPrefix(player.commandSource, command) ?: run {
-                MinecraftClient.getInstance().player?.networkHandler?.sendCommand(command.trim('/')) ?: {
-                    failRequest(player, "Unable to send command to the server")
-                }
+            val response = model.getResponse(player, player.format(prompt), requestConfig)
+            logger.info("Response from OpenAI: $response")
+            val commands = response.split("\n").filter { it.isNotBlank() }.map(::parseCommandFromText)
+            if (!commands[0].startsWith("/")) {
+                failRequest(player, response)
+            } else {
+                commands.forEach { player.executeCommand(it) }
             }
         } catch (exception: OpenAiHttpException) {
             failRequest(player, "Unable to reach OpenAI: ${exception.message ?: "Unknown error"}")
@@ -63,5 +70,15 @@ class AssistantService @JvmOverloads constructor(
                 failRequest(player, exception.message ?: "Unknown error")
             }
         }
+    }
+
+    private fun parseCommandFromText(text: String): String {
+        val singleBacktickQuotedPattern = "`(.*)`".toRegex()
+        val threeBacktickQuotedPattern = "```(.*)```".toRegex()
+        return (
+            singleBacktickQuotedPattern.find(text)?.groupValues?.get(1) ?:
+            threeBacktickQuotedPattern.find(text)?.groupValues?.get(1) ?:
+            text
+        ).trim()
     }
 }
