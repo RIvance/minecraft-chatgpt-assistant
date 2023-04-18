@@ -1,6 +1,6 @@
 # Minecraft ChatGPT Assistant
 
-[![ModLoader|Fabric](https://img.shields.io/badge/ModLoader-Fabric-brightgreen)](https://fabricmc.net/)[![ModLoader|Fabric](https://img.shields.io/badge/Minecraft-1.16.5_|_1.18.2_|_1.19.x-blue)](https://minecraft.net/)
+[![ModLoader|Fabric](https://img.shields.io/badge/ModLoader-Fabric-brightgreen)](https://fabricmc.net/) [![ModLoader|Fabric](https://img.shields.io/badge/Minecraft-1.16.5_|_1.18.2_|_1.19.x-blue)](https://minecraft.net/) [![Curseforge](http://cf.way2muchnoise.eu/full_849619_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/gpt-assistant)
 
 Please give me a star🌟 if you like it!
 
