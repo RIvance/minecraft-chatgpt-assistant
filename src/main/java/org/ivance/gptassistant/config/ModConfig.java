@@ -63,8 +63,13 @@ public class ModConfig implements ConfigData, AssistantConfig {
         DAVINCI_003("text-davinci-003"),
         CURIE_001("text-curie-001"),
         ADA_001("text-ada-001"),
+        BABBAGE_001("text-babbage-001"),
         GPT_35_TURBO("gpt-3.5-turbo"),
-        GPT_35_TURBO_0301("gpt-3.5-turbo-0301");
+        GPT_35_TURBO_0301("gpt-3.5-turbo-0301"),
+        GPT_4("gpt-4"),
+        GPT_4_0314("gpt-4-0314"),
+        GPT_4_32K("gpt-4-32k"),
+        GPT_4_32K_0314("gpt-4-32k-0314");
 
         private final String ident;
 
@@ -78,7 +83,7 @@ public class ModConfig implements ConfigData, AssistantConfig {
         }
     }
 
-    @Comment("Model to use, see https://platform.openai.com/docs/api-reference/models for more details")
+    @Comment("Model to use, see https://platform.openai.com/docs/models/overview for more details")
     private Model model = Model.DAVINCI_003;
 
     @Override @NotNull

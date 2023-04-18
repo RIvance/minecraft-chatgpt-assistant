@@ -15,7 +15,11 @@ class ChatAssistantModel private constructor(
 
     enum class Ident(private val ident: String) {
         GPT_35_TURBO("gpt-3.5-turbo"),
-        GPT_35_TURBO_0301("gpt-3.5-turbo-0301");
+        GPT_35_TURBO_0301("gpt-3.5-turbo-0301"),
+        GPT_4("gpt-4"),
+        GPT_4_0314("gpt-4-0314"),
+        GPT_4_32K("gpt-4-32k"),
+        GPT_4_32K_0314("gpt-4-32k-0314");
 
         override fun toString(): String {
             return ident
@@ -43,9 +47,7 @@ class ChatAssistantModel private constructor(
                     ChatMessage("user", prompt)
                 )
             ).build()
-        ).choices[0].message.content.trim().let {
-            if (!it.startsWith("/")) "/$it" else it
-        }
+        ).choices[0].message.content.trim()
     }
 
     companion object {
